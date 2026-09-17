@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ffffff">
+<title>PLR Premium - Descubra Agora</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    line-height: 1.55;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .page-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .headline-section {
+    text-align: center;
+    padding: 24px 12px 16px 12px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .headline {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+
+  .subheadline {
+    font-size: 0.95rem;
+    color: #000000;
+    font-weight: 400;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .video-frame {
+    width: calc(100% + 32px);
+    margin: 0 -16px 20px -16px;
+    padding: 10px;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-left: none;
+    border-right: none;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    background: #000000;
+    border-radius: 0;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    position: relative;
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000000;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .video-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .play-button {
+    width: 76px;
+    height: 76px;
+    min-width: 76px;
+    min-height: 76px;
+    background: rgba(255, 0, 0, 0.92);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  .play-button:active {
+    transform: scale(0.94);
+  }
+
+  .play-button svg {
+    width: 40%;
+    height: 40%;
+    fill: #ffffff;
+    margin-left: 4px;
+  }
+
+  .play-button.stop svg {
+    margin-left: 0;
+  }
+
+  .video-wrapper.playing .play-button {
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+  }
+
+  .video-wrapper.playing:active .play-button,
+  .video-wrapper.playing:hover .play-button {
+    opacity: 0.8;
+    pointer-events: auto;
+  }
+
+  .progress-bar {
+    display: block;
+    width: 0%;
+    height: 5px;
+    margin-top: 10px;
+    background-color: #ff0000 !important;
+    background: #ff0000 !important;
+    border-radius: 3px;
+    transition: width 0.2s linear;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 0.25);
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 24px 4px;
+    max-width: 100%;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    display: none;
+  }
+
+  .cta-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    display: block;
+    animation: ctaPopIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+
+  @keyframes ctaPopIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.82) translateY(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .cta-headline {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ff0000;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+
+  .cta-subheadline {
+    font-size: 0.95rem;
+    color: #000000;
+    margin-bottom: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .cta-button {
+    display: block;
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+    background-color: #ff0000;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 800;
+    padding: 22px 20px;
+    min-height: 64px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 14px rgba(255, 0, 0, 0.35);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    animation: pulse 2s infinite;
+    margin: 0 auto 14px auto;
+    line-height: 1.2;
+    -webkit-appearance: none;
+    appearance: none;
+    text-align: center;
+    touch-action: manipulation;
+  }
+
+  .cta-button:active {
+    transform: scale(0.98);
+    background-color: #e60000;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 4px 14px rgba(255, 0, 0, 0.35);
+    }
+    50% {
+      box-shadow: 0 4px 26px rgba(255, 0, 0, 0.6);
+    }
+  }
+
+  .cta-subtext {
+    font-size: 0.85rem;
+    color: #000000;
+    font-weight: 500;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  .benefits-section {
+    max-width: 100%;
+    margin: 28px auto;
+    padding: 0 4px;
+  }
+
+  .benefits-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .benefits-list li {
+    padding: 12px 0;
+    padding-left: 32px;
+    position: relative;
+    font-size: 0.95rem;
+    color: #000000;
+    border-bottom: 1px solid #eeeeee;
+    line-height: 1.5;
+  }
+
+  .benefits-list li:last-child {
+    border-bottom: none;
+  }
+
+  .benefits-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    color: #ff0000;
+    font-weight: 900;
+    font-size: 1.1rem;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+  }
+
+  .guarantee-section {
+    width: calc(100% + 32px);
+    margin: 36px -16px;
+    padding: 28px 20px;
+    border-top: 2px solid #ff0000;
+    border-bottom: 2px solid #ff0000;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    text-align: center;
+    background: #ffffff;
+  }
+
+  .guarantee-badge {
+    display: block;
+    color: #ff0000;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+    line-height: 1.35;
+  }
+
+  .guarantee-text {
+    font-size: 0.92rem;
+    color: #000000;
+    line-height: 1.6;
+  }
+
+  .security-section {
+    max-width: 100%;
+    margin: 20px auto 40px auto;
+    padding: 0 12px;
+    text-align: center;
+  }
+
+  .security-text {
+    font-size: 0.78rem;
+    color: #000000;
+    opacity: 0.88;
+    font-weight: 600;
+    line-height: 1.7;
+    letter-spacing: 0.2px;
+  }
+
+  .social-notification {
+    position: fixed;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    left: 12px;
+    right: 12px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(140%);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  .social-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .notification-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+    background: #ff0000;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  .notification-content {
+    text-align: left;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .notification-text {
+    font-size: 0.82rem;
+    color: #000000;
+    font-weight: 600;
+    line-height: 1.3;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .notification-time {
+    font-size: 0.7rem;
+    color: #ff0000;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+
+  .footer-section {
+    text-align: center;
+    padding: 28px 16px 36px 16px;
+    padding-bottom: calc(36px + env(safe-area-inset-bottom));
+    border-top: 1px solid #eeeeee;
+    margin-top: 24px;
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+
+  .footer-text {
+    font-size: 0.72rem;
+    color: #000000;
+    opacity: 0.72;
+    line-height: 1.7;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding: 0 24px;
+      max-width: 720px;
+    }
+
+    .headline-section {
+      padding: 48px 20px 24px 20px;
+    }
+
+    .headline {
+      font-size: 2.4rem;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .subheadline {
+      font-size: 1.2rem;
+    }
+
+    .video-frame {
+      width: 100%;
+      margin: 0 auto 32px auto;
+      padding: 14px;
+      border: 2px solid #000000;
+      border-radius: 4px;
+    }
+
+    .play-button {
+      width: 100px;
+      height: 100px;
+      min-width: 100px;
+      min-height: 100px;
+    }
+
+    .progress-bar {
+      height: 5px;
+      margin-top: 14px;
+    }
+
+    .cta-section {
+      padding: 40px 20px;
+      max-width: 680px;
+    }
+
+    .cta-headline {
+      font-size: 2rem;
+      margin-bottom: 22px;
+    }
+
+    .cta-subheadline {
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      width: auto;
+      font-size: 1.35rem;
+      padding: 26px 64px;
+      min-width: 360px;
+    }
+
+    .cta-subtext {
+      font-size: 0.95rem;
+    }
+
+    .benefits-section {
+      margin: 48px auto;
+      max-width: 700px;
+    }
+
+    .benefits-title {
+      font-size: 1.55rem;
+      margin-bottom: 28px;
+    }
+
+    .benefits-list li {
+      font-size: 1.05rem;
+      padding: 16px 0;
+      padding-left: 40px;
+    }
+
+    .guarantee-section {
+      width: 100%;
+      margin: 56px auto;
+      padding: 44px 40px;
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      max-width: 720px;
+    }
+
+    .guarantee-badge {
+      font-size: 1.35rem;
+      margin-bottom: 16px;
+    }
+
+    .guarantee-text {
+      font-size: 1.05rem;
+    }
+
+    .security-section {
+      max-width: 720px;
+      margin: 32px auto 64px auto;
+    }
+
+    .security-text {
+      font-size: 0.88rem;
+    }
+
+    .social-notification {
+      left: 20px;
+      right: auto;
+      max-width: 360px;
+      bottom: 20px;
+    }
+
+    .footer-section {
+      padding: 40px 20px 60px 20px;
+      margin-top: 40px;
+      width: calc(100% + 48px);
+      margin-left: -24px;
+      margin-right: -24px;
+    }
+
+    .footer-text {
+      font-size: 0.8rem;
+      max-width: 720px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-container">
+
+  <section class="headline-section">
+    <h1 class="headline">ASSISTA ATÉ O FINAL E DESCUBRA O SEGREDO</h1>
+    <p class="subheadline">Não saia dessa página sem ver o vídeo completo. A oportunidade que você estava esperando está aqui.</p>
+  </section>
+
+  <div class="video-frame">
+    <div class="video-wrapper" id="videoWrapper">
+      <video id="vslVideo" playsinline preload="metadata" disablePictureInPicture webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false">
+        <source src="VSL ED NACIONAL.mp4" type="video/mp4">
+        Seu navegador não suporta a reprodução de vídeos.
+      </video>
+      <div class="video-controls" id="videoControls">
+        <div class="play-button" id="playButton">
+          <svg id="playIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg id="stopIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+            <path d="M6 6h12v12H6z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <section class="cta-section" id="ctaSection">
+    <h2 class="cta-headline">🔥 OFERTA EXCLUSIVA POR TEMPO LIMITADO 🔥</h2>
+    <p class="cta-subheadline">Você chegou até aqui e agora tem a chance de garantir o seu acesso imediato.</p>
+    <a href="#" class="cta-button" id="ctaButton">QUERO TER ACESSO AGORA</a>
+    <p class="cta-subtext">Pagamento 100% seguro • Acesso imediato após a compra</p>
+  </section>
+
+  <section class="benefits-section">
+    <h2 class="benefits-title">O QUE VOCÊ VAI RECEBER</h2>
+    <ul class="benefits-list">
+      <li>Acesso completo e imediato ao material premium</li>
+      <li>Conteúdo de alta qualidade, pronto para usar</li>
+      <li>Direitos de uso liberados conforme PLR</li>
+      <li>Suporte prioritário para todas as suas dúvidas</li>
+      <li>Atualizações gratuitas futuras incluídas</li>
+    </ul>
+  </section>
+
+  <section class="guarantee-section">
+    <div class="guarantee-badge">🛡️ GARANTIA INCONDICIONAL DE 7 DIAS</div>
+    <p class="guarantee-text">Se por qualquer motivo você não estiver satisfeito(a) com o produto, basta entrar em contato dentro de 7 dias que devolvemos 100% do seu investimento, sem perguntas, sem burocracia. Seu risco é zero.</p>
+  </section>
+
+  <section class="cta-section" id="ctaSectionBottom">
+    <h2 class="cta-headline">NÃO PERCA MAIS TEMPO!</h2>
+    <p class="cta-subheadline">Clique no botão abaixo e garanta o seu acesso enquanto essa oferta está disponível.</p>
+    <a href="#" class="cta-button">COMPRAR AGORA</a>
+    <p class="cta-subtext">Compra rápida e segura</p>
+  </section>
+
+  <section class="security-section">
+    <p class="security-text">🔒 PAGAMENTO 100% SEGURO • ACESSO IMEDIATO • PRIVACIDADE PROTEGIDA</p>
+  </section>
+
+  <footer class="footer-section">
+    <p class="footer-text">
+      Este site não é afiliado ao Facebook ou qualquer entidade do Facebook. Todos os conceitos mencionados servem apenas como referência e base educacional. Resultados podem variar de pessoa para pessoa. Produto comercializado com total responsabilidade.
+    </p>
+  </footer>
+
+</div>
+
+<div class="social-notification" id="socialNotification">
+  <div class="notification-avatar" id="notifAvatar">A</div>
+  <div class="notification-content">
+    <div class="notification-text" id="notifText">Ana acabou de comprar</div>
+    <div class="notification-time" id="notifTime">Há 2 minutos</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const video = document.getElementById('vslVideo');
+    const videoWrapper = document.getElementById('videoWrapper');
+    const videoControls = document.getElementById('videoControls');
+    const playIcon = document.getElementById('playIcon');
+    const stopIcon = document.getElementById('stopIcon');
+    const ctaSection = document.getElementById('ctaSection');
+    const ctaSectionBottom = document.getElementById('ctaSectionBottom');
+    const ctaButton = document.getElementById('ctaButton');
+    const progressBar = document.getElementById('progressBar');
+    const socialNotification = document.getElementById('socialNotification');
+    const notifAvatar = document.getElementById('notifAvatar');
+    const notifText = document.getElementById('notifText');
+    const notifTime = document.getElementById('notifTime');
+
+    let videoWatched = false;
+    const MIN_WATCH_PERCENT = 0.95;
+
+    const buyerNames = [
+      { name: 'Armando', city: 'Maputo', province: 'Maputo Cidade' },
+      { name: 'Maria', city: 'Matola', province: 'Maputo Província' },
+      { name: 'Carlos', city: 'Beira', province: 'Sofala' },
+      { name: 'Teresa', city: 'Nampula', province: 'Nampula' },
+      { name: 'Joaquim', city: 'Chimoio', province: 'Manica' },
+      { name: 'Graça', city: 'Xai-Xai', province: 'Gaza' },
+      { name: 'Samora', city: 'Quelimane', province: 'Zambézia' },
+      { name: 'Isabel', city: 'Inhambane', province: 'Inhambane' },
+      { name: 'Eduardo', city: 'Tete', province: 'Tete' },
+      { name: 'Luisa', city: 'Pemba', province: 'Cabo Delgado' },
+      { name: 'Agostinho', city: 'Lichinga', province: 'Niassa' },
+      { name: 'Marta', city: 'Nacala', province: 'Nampula' },
+      { name: 'Rui', city: 'Maxixe', province: 'Inhambane' },
+      { name: 'Irene', city: 'Manhiça', province: 'Maputo Província' },
+      { name: 'Fernando', city: 'Angoche', province: 'Nampula' },
+      { name: 'Helena', city: 'Ilha de Moçambique', province: 'Nampula' },
+      { name: 'António', city: 'Gurúè', province: 'Zambézia' },
+      { name: 'Ana', city: 'Moatize', province: 'Tete' },
+      { name: 'Paulo', city: 'Mocímboa da Praia', province: 'Cabo Delgado' },
+      { name: 'Célia', city: 'Cuamba', province: 'Niassa' },
+      { name: 'João', city: 'Chócue', province: 'Gaza' },
+      { name: 'Fátima', city: 'Dondo', province: 'Sofala' },
+      { name: 'Celestino', city: 'Vilanculos', province: 'Inhambane' },
+      { name: 'Rosa', city: 'Pemba', province: 'Cabo Delgado' },
+      { name: 'Pascoal', city: 'Montepuez', province: 'Cabo Delgado' },
+      { name: 'Lucinda', city: 'Lichinga', province: 'Niassa' },
+      { name: 'Isaltino', city: 'Boane', province: 'Maputo Província' },
+      { name: 'Sofia', city: 'Nampula', province: 'Nampula' },
+      { name: 'Benedito', city: 'Beira', province: 'Sofala' },
+      { name: 'Eugénia', city: 'Maputo', province: 'Maputo Cidade' },
+      { name: 'Gilberto', city: 'Chimoio', province: 'Manica' },
+      { name: 'Dora', city: 'Xai-Xai', province: 'Gaza' },
+      { name: 'Aníbal', city: 'Quelimane', province: 'Zambézia' },
+      { name: 'Amélia', city: 'Tete', province: 'Tete' },
+      { name: 'Rogério', city: 'Pemba', province: 'Cabo Delgado' },
+      { name: 'Isaura', city: 'Matola', province: 'Maputo Província' },
+      { name: 'Domingos', city: 'Nacala', province: 'Nampula' },
+      { name: 'Manuela', city: 'Inhambane', province: 'Inhambane' },
+      { name: 'Júlio', city: 'Lichinga', province: 'Niassa' },
+      { name: 'Margarida', city: 'Maxixe', province: 'Inhambane' },
+      { name: 'Felisberto', city: 'Maputo', province: 'Maputo Cidade' },
+      { name: 'Belita', city: 'Beira', province: 'Sofala' },
+      { name: 'Zacarias', city: 'Chimoio', province: 'Manica' },
+      { name: 'Deolinda', city: 'Quelimane', province: 'Zambézia' },
+      { name: 'Horácio', city: 'Nampula', province: 'Nampula' },
+      { name: 'Gina', city: 'Tete', province: 'Tete' },
+      { name: 'Leonel', city: 'Matola', province: 'Maputo Província' },
+      { name: 'Nazaré', city: 'Xai-Xai', province: 'Gaza' },
+      { name: 'Salvador', city: 'Pemba', province: 'Cabo Delgado' },
+      { name: 'Ofélia', city: 'Lichinga', province: 'Niassa' }
+    ];
+
+    function togglePlay() {
+      if (video.paused) {
+        var p = video.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(function() {});
+        }
+      } else {
+        video.pause();
+      }
+    }
+
+    function updatePlayButton() {
+      if (video.paused) {
+        videoWrapper.classList.remove('playing');
+        playIcon.style.display = 'block';
+        stopIcon.style.display = 'none';
+      } else {
+        videoWrapper.classList.add('playing');
+        playIcon.style.display = 'none';
+        stopIcon.style.display = 'block';
+      }
+    }
+
+    videoControls.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      togglePlay();
+    });
+
+    video.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    video.addEventListener('play', updatePlayButton);
+    video.addEventListener('pause', updatePlayButton);
+    video.addEventListener('ended', updatePlayButton);
+
+    video.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      const forbiddenKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+                            'j', 'J', 'l', 'L', '>', ',', '<', '.',
+                            'Home', 'End', 'PageUp', 'PageDown',
+                            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      if (forbiddenKeys.includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlay();
+      }
+    });
+
+    function showCTA() {
+      if (!videoWatched) {
+        videoWatched = true;
+        ctaSection.classList.add('visible');
+        ctaSectionBottom.classList.add('visible');
+        setTimeout(function() {
+          ctaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 700);
+      }
+    }
+
+    video.addEventListener('timeupdate', function() {
+      if (video.duration) {
+        const percent = video.currentTime / video.duration;
+        const progressPercent = (percent * 100).toFixed(1);
+        progressBar.style.width = progressPercent + '%';
+        progressBar.style.backgroundColor = '#ff0000';
+
+        if (percent >= MIN_WATCH_PERCENT) {
+          showCTA();
+        }
+      }
+    });
+
+    video.addEventListener('loadedmetadata', function() {
+      progressBar.style.width = '0%';
+      progressBar.style.backgroundColor = '#ff0000';
+    });
+
+    video.addEventListener('ended', function() {
+      showCTA();
+    });
+
+    video.addEventListener('seeking', function(e) {
+      e.preventDefault();
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    videoControls.addEventListener('touchstart', function(e) {
+      if (e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    videoControls.addEventListener('touchend', function(e) {
+      if (e.changedTouches.length > 0) {
+        var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+        var dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+        if (dx < 10 && dy < 10) {
+          e.preventDefault();
+          togglePlay();
+        }
+      }
+    }, { passive: false });
+
+    ctaButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Redirecionando para o checkout...');
+    });
+
+    document.addEventListener('dblclick', function(e) {
+      e.preventDefault();
+    }, { passive: false });
+
+    function getRandomBuyer() {
+      const random = Math.floor(Math.random() * buyerNames.length);
+      return buyerNames[random];
+    }
+
+    function getTimeAgo() {
+      const options = [
+        'Há 1 minuto',
+        'Há 2 minutos',
+        'Há 3 minutos',
+        'Há 4 minutos',
+        'Há 5 minutos',
+        'Há 7 minutos',
+        'Há 10 minutos',
+        'Há menos de um minuto',
+        'Há 6 minutos',
+        'Há 8 minutos',
+        'Há 12 minutos',
+        'Há 15 minutos'
+      ];
+      return options[Math.floor(Math.random() * options.length)];
+    }
+
+    function showSocialNotification() {
+      const buyer = getRandomBuyer();
+      notifAvatar.textContent = buyer.name.charAt(0).toUpperCase();
+      notifText.innerHTML = '<strong>' + buyer.name + '</strong> de <strong>' + buyer.city + ' - ' + buyer.province + '</strong>, Moçambique acabou de comprar';
+      notifTime.textContent = getTimeAgo();
+
+      socialNotification.classList.add('show');
+
+      setTimeout(function() {
+        socialNotification.classList.remove('show');
+      }, 5500);
+    }
+
+    setTimeout(showSocialNotification, 8000);
+
+    setInterval(function() {
+      const nextDelay = 12000 + Math.floor(Math.random() * 20000);
+      setTimeout(showSocialNotification, nextDelay);
+    }, 30000);
+
+  })();
+</script>
+
+</body>
+</html>
